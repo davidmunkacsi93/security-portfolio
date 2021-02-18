@@ -1,4 +1,4 @@
 class PortfolioItem:
-    def __init__(self, ticker: str, count: int):
+    def __init__(self, ticker: str, shareCount: int):
         self.ticker = ticker
-        self.count = count
+        self.shareCount = shareCount
