@@ -17,7 +17,7 @@ class Portfolio:
         print(self.portfolioCounts)
                                         
     def getReturns(self):
-        securityReturns = np.log(self.securityData / self.securityData.shift(1))
+        securityReturns : pd.core.frame.DataFrame = np.log(self.securityData / self.securityData.shift(1))
         return securityReturns
     
     def getReturnsCorrelation(self):
