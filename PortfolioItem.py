@@ -7,20 +7,17 @@ class PortfolioItem:
         self.ticker = ticker
         self.market = market
         self.shareCount = shareCount
+        self.securityData = pd.DataFrame()
 
         for t in [ticker, market]: 
-            self.securityData[t] = wb.DataReader(t, data_source='yahoo', start='2015-1-1', end='2021-03-23')['Adj Close']
-
-
-    def calculateSecurityReturns(self):
-        securityReturns : pd.core.frame.DataFrame = np.log(self.securityData / self.securityData.shift(1))
-        return securityReturns
+            self.securityData[t] = wb.DataReader(t, data_source='yahoo', start='2017-1-1', end='2021-03-23')['Adj Close']
 
     def calculateBeta(self):
-        securityReturns = self.calculateSecurityReturn()
+        securityReturns = np.log(self.securityData / self.securityData.shift(1))
         covarianceMatrix = securityReturns.cov() * 250
+
         covarianceWithMarket = covarianceMatrix.iloc[0,1]
-        marketVariance = self.securityData[self.market].var() * 250
+        marketVariance = securityReturns[self.market].var() * 250
 
         return covarianceWithMarket/marketVariance
 

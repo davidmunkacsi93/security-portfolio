@@ -14,7 +14,6 @@ class Portfolio:
             
     def initializeDictionaries(self, portfolioItems: [PortfolioItem]):
         self.portfolioCounts = dict((item.ticker, item.shareCount) for item in portfolioItems)
-        print(self.portfolioCounts)
                                         
     def calculateReturns(self):
         securityReturns : pd.core.frame.DataFrame = np.log(self.securityData / self.securityData.shift(1))
