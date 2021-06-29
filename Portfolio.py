@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from PortfolioItem import *
 
 class Portfolio:
-    def __init__(self, portfolioItems: [PortfolioItem]):
+    def __init__(self, portfolioItems):
         self.initializeDictionaries(portfolioItems)
         self.securityData = pd.DataFrame()
         self.portfolioItems = portfolioItems
@@ -14,12 +14,16 @@ class Portfolio:
         for portfolioItem in portfolioItems:
             self.securityData[portfolioItem.ticker] = wb.DataReader(portfolioItem.ticker, data_source='yahoo', start='2016-1-1')['Adj Close']
             
-    def initializeDictionaries(self, portfolioItems: [PortfolioItem]):
+    def initializeDictionaries(self, portfolioItems):
         self.portfolioCounts = dict((item.ticker, item.shareCount) for item in portfolioItems)
                                         
     def calculateReturns(self):
         securityReturns : pd.core.frame.DataFrame = np.log(self.securityData / self.securityData.shift(1))
         return securityReturns
+
+    def listSharpeRatios(self):
+        for portfolioItem in self.portfolioItems:
+            print(portfolioItem.calculateSharpeRatio())
 
     def plotExpectedReturns(self):
         tickers = list(item.ticker for item in self.portfolioItems)
