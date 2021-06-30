@@ -4,5 +4,6 @@ from Portfolio import *
 portfolioItems = [PortfolioItem('AAPL', 'DAX', 24), PortfolioItem('HFG.DE', 'DAX', 11)]
 portfolio = Portfolio(portfolioItems)
 
-portfolio.listSharpeRatios()
-portfolio.plotExpectedReturns()
+#portfolio.listSharpeRatios()
+portfolio.forecastFuturePrices()
+#portfolio.plotExpectedReturns()

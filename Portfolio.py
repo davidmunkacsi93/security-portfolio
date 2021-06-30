@@ -36,3 +36,7 @@ class Portfolio:
         plt.title('Portfolio expected returns')
 
         plt.show()
+
+    def forecastFuturePrices(self):
+        for portfolioItem in self.portfolioItems:
+            print(portfolioItem.forecastFuturePrice())

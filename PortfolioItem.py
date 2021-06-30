@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas_datareader import data as wb
 import numpy as np
+from scipy.stats import norm
 
 class PortfolioItem:
     def __init__(self, ticker: str, market: str, shareCount: int):
@@ -40,3 +41,21 @@ class PortfolioItem:
         standardDeviation = self.calculateStandardDeviation()
 
         return (expectedReturn - self.riskFree) / standardDeviation
+
+    def forecastFuturePrice(self):
+        data = pd.DataFrame()
+        data[self.ticker] = self.securityData[self.ticker]
+        logReturns = np.log(1 + data.pct_change())
+        mean = logReturns.mean()
+        variance = logReturns.var()
+
+        drift = mean - (0.5 * variance)
+        standardDeviation = logReturns.std()
+
+        timeIntervals = 1000
+        iterations = 10
+
+        simulation = norm.ppf(np.random.rand(timeIntervals, iterations))
+
+        dailyReturns = np.exp(drift.values + standardDeviation.values * simulation)
+        print(dailyReturns)
