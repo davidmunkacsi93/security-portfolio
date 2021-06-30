@@ -65,7 +65,6 @@ class PortfolioItem:
 
         for t in range(1, timeIntervals):
             pricesList[t] = pricesList[t - 1] * dailyReturns[t]
-        print(pricesList)
 
         plt.figure(figsize=(10,6))
         plt.plot(pricesList)
