@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas_datareader import data as wb
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.stats import norm
 
 class PortfolioItem:
@@ -54,8 +55,20 @@ class PortfolioItem:
 
         timeIntervals = 1000
         iterations = 10
-
         simulation = norm.ppf(np.random.rand(timeIntervals, iterations))
-
         dailyReturns = np.exp(drift.values + standardDeviation.values * simulation)
-        print(dailyReturns)
+        
+        # Market price day zero.
+        currentMarketPrice = data.iloc[-1]
+        pricesList = np.zeros_like(dailyReturns)
+        pricesList[0] = currentMarketPrice
+
+        for t in range(1, timeIntervals):
+            pricesList[t] = pricesList[t - 1] * dailyReturns[t]
+        print(pricesList)
+
+        plt.figure(figsize=(10,6))
+        plt.plot(pricesList)
+        plt.title(self.ticker + ' expected price')
+
+        plt.show()
