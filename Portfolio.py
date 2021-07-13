@@ -40,3 +40,7 @@ class Portfolio:
     def forecastFuturePrices(self):
         for portfolioItem in self.portfolioItems:
             print(portfolioItem.forecastFuturePrice())
+
+    def simulateBlackScholes(self):
+        for portfolioItem in self.portfolioItems:
+            portfolioItem.BSM()

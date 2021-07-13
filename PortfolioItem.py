@@ -3,6 +3,7 @@ from pandas_datareader import data as wb
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
+from BlackScholes import BlackScholes
 
 class PortfolioItem:
     def __init__(self, ticker: str, market: str, shareCount: int):
@@ -15,6 +16,8 @@ class PortfolioItem:
         self.riskFree = 0.025
         self.equityRiskPremium = 0.5
         self.annualMarketYears = 250
+
+        self.blackScholes = BlackScholes()
 
         for t in [ticker, market]: 
             self.securityData[t] = wb.DataReader(t, data_source='yahoo', start='2017-1-1', end='2021-03-23')['Adj Close']
@@ -71,3 +74,10 @@ class PortfolioItem:
         plt.title(self.ticker + ' expected price')
 
         plt.show()
+
+    def BSM(self):
+        data = pd.DataFrame()
+        data[self.ticker] = self.securityData[self.ticker]
+
+        stockPrice = data.iloc[-1]
+        print(stockPrice)
