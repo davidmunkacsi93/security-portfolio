@@ -81,3 +81,12 @@ class PortfolioItem:
 
         stockPrice = data.iloc[-1]
         print(stockPrice)
+
+        logReturns = np.log(1 - data.pct_change())
+        standardDeviation = logReturns.std() * 250 ** 0.5
+        riskFree = 0.025
+        strikePrice = 110.0
+        timeInYears = 1
+
+        bsm = self.blackScholes.BSM(stockPrice, strikePrice, riskFree, standardDeviation, timeInYears)
+        print(bsm)
